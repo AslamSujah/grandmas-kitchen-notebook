@@ -15,7 +15,6 @@ init_db()
 with st.sidebar:
     st.header("About")
     st.write("This app is cloud-friendly and works even without a local Ollama server.")
-    st.write("Tip: For best structured output, set OLLAMA_URL and OLLAMA_MODEL in deployment secrets.")
 
 col1, col2 = st.columns([1, 1])
 
