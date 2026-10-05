@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: grandmas-kitchen-notebook
+    env: docker
+    plan: free
+    autoDeploy: true
