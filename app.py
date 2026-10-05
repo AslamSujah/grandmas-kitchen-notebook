@@ -8,9 +8,14 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 st.set_page_config(page_title="Grandma's Kitchen Notebook", layout="wide")
 st.title("🍲 Grandma's Kitchen Notebook")
-st.caption("Open-source AI recipe memory tool (audio + handwritten cards)")
+st.caption("Upload voice notes and recipe photos to build a family cookbook.")
 
 init_db()
+
+with st.sidebar:
+    st.header("About")
+    st.write("This app is cloud-friendly and works even without a local Ollama server.")
+    st.write("Tip: For best structured output, set OLLAMA_URL and OLLAMA_MODEL in deployment secrets.")
 
 col1, col2 = st.columns([1, 1])
 
@@ -33,7 +38,7 @@ with col1:
             with open(image_path, "wb") as f:
                 f.write(image_file.read())
 
-        with st.spinner("Running AI pipeline..."):
+        with st.spinner("Running pipeline..."):
             recipe = process_inputs(audio_path, image_path)
 
         st.success("Done")
@@ -48,7 +53,7 @@ with col1:
             steps=steps_text,
             story=recipe.get("story", ""),
             source_audio=audio_path,
-            source_image=image_path
+            source_image=image_path,
         )
         st.success("Saved to local DB")
 
@@ -66,3 +71,4 @@ with col2:
                 st.text(r["steps"] or "")
                 st.markdown("**Story**")
                 st.write(r["story"] or "")
+                st.caption(f"Audio: {r['source_audio']} | Image: {r['source_image']}")
